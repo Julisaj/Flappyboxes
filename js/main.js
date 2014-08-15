@@ -27,12 +27,12 @@ var mainState = {
       //This function is called right after preload function 
       //This is where we set up the game assets from earlier
       
-      game.physics.startSystem(Phaser.Physics.Arcade);
+      game.physics.startSystem(Phaser.Physics.ARCADE);
       
       this.bird = this.game.add.sprite(100, 245, 'bird');
       
       
-      //Now that we have a bird and grvity... we need to tell the bird 
+      //Now that we have a bird and gravity... we need to tell the bird 
       //to react to gravity
       
       game.physics.arcade.enable(this.bird);
@@ -43,6 +43,8 @@ var mainState = {
       
       spaceKey.onDown.add(this.jump, this);
       
+      this.score = 0;
+      this.labelScore = game.add.text(20,20, "0", {font: "30px Arial", fill: "#ffffff"});
       
       this.pipes = game.add.group();
       
@@ -62,6 +64,7 @@ var mainState = {
       this.restartGame();
        }
     
+    game.physics.arcade.overlap(this.bird, this.pipes,this.restartGame, null, this);
     },
     
     addOnePipe: function (x,y) {
@@ -86,6 +89,11 @@ var mainState = {
         this.addOnePipe(400, i*60 + 10);
         
       }
+      
+      
+      
+      this.score += 1;
+      this.labelScore.text = this.score;
     },
     
     
